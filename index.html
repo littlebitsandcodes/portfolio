@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="img/icon-3.svg" sizes="any">
+    <title>Christina Li</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background-color: #f7c848;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            font-size: 0.85em;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1a1a1a;
+            position: relative;
+            padding: 5px 2px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            left: -10%;
+            top: -10%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%231a1a1a' stroke-width='5' vector-effect='non-scaling-stroke' style='transform-origin: center; transform: rotate(-2deg);' stroke-dasharray='0.5, 8'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0;
+            transform: scale(0.9) rotate(-5deg);
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        .nav-links a:hover::after {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .intro-area {
+            display: flex;
+            justify-content: space-between;
+            margin: 80px 0;
+            gap: 40px;
+        }
+
+        .bio {
+            font-size: 2.2em;
+            line-height: 1.4;
+            letter-spacing: -0.02em;
+            max-width: 800px;
+            flex: 0 1 800px;
+        }
+
+        .clients-section {
+            width: 250px;
+            flex-shrink: 0;
+            margin-right: 140px;
+        }
+
+        .clients-title {
+            font-size: 1em;
+            margin-bottom: 20px;
+            color: rgba(0,0,0,0.7);
+        }
+
+        .clients-list {
+            list-style: none;
+            font-size: 0.8em;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .client-category {
+            color: rgba(0,0,0,0.5);
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+        }
+
+        /* Carousel styles */
+        .carousel {
+            width: 390px;
+            flex-shrink: 0;
+            margin-right: 140px;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+
+        .carousel-inner {
+            display: flex;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 2;
+        }
+
+        .carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            border: none;
+            padding: 0;
+        }
+
+        .carousel-dot.active {
+            background: white;
+        }
+
+        /* Section dividers/tabs */
+        .section-divider {
+            margin: 80px 0 40px;
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            font-weight: normal;
+            background: #f7c848;
+            padding-right: 20px;
+            z-index: 1;
+        }
+
+        .section-line {
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: rgba(0,0,0,0.1);
+            top: 50%;
+            z-index: 0;
+        }
+
+        /* Portfolio grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .portfolio-grid-large {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .portfolio-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: auto;
+            background: #1a1a1a;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            margin-bottom: 0;
+            display: block; 
+        }
+
+        .portfolio-grid-large .portfolio-item img {
+            aspect-ratio: 16/9;
+        }
+
+        .portfolio-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 0.85em;
+        }
+
+        .portfolio-title {
+            color: #1a1a1a;
+        }
+
+        .portfolio-category {
+            color: rgba(0,0,0,0.5);
+            margin-bottom: 5px;
+        }
+
+        .more-button-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 225px;
+        }
+
+        .more-button {
+            color: #1a1a1a;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-size: 1.1em;
+            padding: 12px 24px;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50px;
+        }
+
+        .button-text {
+            display: inline-block;
+        }
+
+        .more-button:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .portfolio-item a {
+            display: block;
+            position: relative;
+            transition: transform 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-item a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid #1a1a1a;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .portfolio-item a:hover {
+            transform: scale(0.98);
+        }
+
+        .portfolio-item a:hover::before {
+            opacity: 1;
+        }
+
+        .portfolio-video {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 5px;
+        }
+
+        .tech-tag {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 1em;
+            white-space: nowrap;
+        }
+
+        /* Technology-specific colors */
+        .tech-tag[data-tech="after-effects"] {
+            background: rgba(235, 88, 81, 0.1);
+            color: #EB5851;
+            border: 1px solid rgba(235, 88, 81, 0.3);
+        }
+
+        .tech-tag[data-tech="d3"] {
+            background: rgba(24, 126, 36, 0.1);
+            color: #187E24;
+            border: 1px solid rgba(24, 126, 36, 0.3);
+        }
+
+        .tech-tag[data-tech="GSAP"] {
+            background: rgba(81, 97, 23, 0.1);
+            color: #CAE661;
+            border: 1px solid rgba(202, 230, 97, 0.3);;
+        }
+
+        .tech-tag[data-tech="illustrator"] {
+            background: rgba(47, 85, 145, 0.1);
+            color: #2F5591;
+            border: 1px solid rgba(47, 85, 145, 0.3);
+        }
+
+        .tech-tag[data-tech="mapbox"] {
+            background: rgba(157, 73, 158, 0.1);
+            color: #9D499E;
+            border: 1px solid rgba(157, 73, 158, 0.3);
+        }
+
+        .tech-tag[data-tech="photoshop"] {
+            background: rgba(180, 200, 190, 0.2);
+            color: #B4C8BE;
+            border: 1px solid rgba(180, 200, 190, 0.3);
+        }
+
+        .tech-tag[data-tech="python"] {
+            background: rgba(242, 240, 212, 0.2);
+            color: #F2F0D4;
+            border: 1px solid rgba(242, 240, 212, 0.3);
+        }
+
+        .tech-tag[data-tech="QGIS"] {
+            background: rgba(228, 163, 212, 0.1);
+            color: #E4A4D4;
+            border: 1px solid rgba(228, 163, 212, 0.3);
+        }
+
+        .tech-tag[data-tech="svelte"] {
+            background: rgba(76, 28, 33, 0.1);
+            color: #4C1C21;
+            border: 1px solid rgba(76, 28, 33, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding: 20px 0;
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: #1a1a1a;
+            position: relative;
+            padding: 5px 2px;
+        }
+
+        .social-links a::after {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            left: -10%;
+            top: -10%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%231a1a1a' stroke-width='5' vector-effect='non-scaling-stroke' style='transform-origin: center; transform: rotate(-2deg);' stroke-dasharray='0.5, 8'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0;
+            transform: scale(0.9) rotate(-5deg);
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        .social-links a:hover::after {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        .bio-content {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.1em;
+            line-height: 1.6;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .bio-section {
+            margin-bottom: 2em;
+        }
+
+        .bio-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .bio-link {
+            color: inherit;
+            text-decoration: none;
+            position: relative;
+            transition: font-style 0.3s ease;
+            display: inline-block;
+        }
+
+        .bio-link::after,
+        .bio-link::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            left: 0;
+            background-color: currentColor;
+        }
+
+        .bio-link::before {
+            bottom: -2px;
+        }
+
+        .bio-link::after {
+            bottom: -4px;
+        }
+
+        .bio-link:hover {
+            font-style: italic;
+        }
+
+        /* Section divider adjustments */
+        .section-divider {
+            margin: 80px 0 40px;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .logo-grid {
+            margin: 60px 0;
+            padding: 0 20px;
+        }
+
+        .logo-row {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+        }
+
+        .logo-item {
+            flex: 0 1 calc(25% - 40px);
+            display: flex;
+            justify-content: left;
+            align-items: left;
+        }
+
+        .logo-item img {
+            max-width: 70%;
+            height: auto;
+            filter: grayscale(100%) brightness(0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo-item img[alt="AP Logo"] {
+            max-height: 60px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 40px;
+            bottom: 40px;
+            width: 44px;
+            height: 44px;
+            background: rgba(26, 26, 26, 0.05);
+            border: 1px solid rgba(26, 26, 26, 0.1);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2em;
+            color: #1a1a1a;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: rgba(26, 26, 26, 0.1);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .back-to-top {
+                right: 20px;
+                bottom: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .intro-area {
+                flex-direction: column;
+            }
+            
+            .left-column {
+                width: 100%;
+            }
+
+            .carousel {
+                width: 250%;
+                margin-right: 0;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .bio {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 0;
+            }
+
+            .bio-content {
+            font-size: 1em;
+            }
+
+            .carousel {
+                width: 150%;
+                margin-right: 0;
+            }
+
+            .logo-row {
+                display: flex;
+                justify-content: space-between;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .logo-item img {
+                max-height: 60px;
+            }
+
+            .logo-item img[alt="AP Logo"] {
+                max-height: 40px;
+            }
+
+            .portfolio-grid-large {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .portfolio-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .section-title {
+                font-size: 1.4em;
+            }
+
+            .section-divider {
+                margin: 60px 0 30px;
+            }
+
+            .back-to-top {
+                right: 20px;
+                bottom: 20px;
+                width: 40px;
+                height: 40px;
+            }
+
+        }
+
+            @media (max-width: 480px) {
+                .container {
+                    padding: 0 10px;
+                }
+
+                .logo-item img {
+                    max-height: 40px;
+                }
+
+                .logo-item img[alt="AP Logo"] {
+                    max-height: 30px;
+                }
+
+                .portfolio-grid,
+                .portfolio-grid-large {
+                    gap: 15px;
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Christina Li</div>
+            <nav class="nav-links">
+                <a href="#data">Data</a>
+                <a href="#multimedia">Multimedia</a>
+                <a href="#bio">Bio</a>
+            </nav>
+        </header>
+
+        <div class="intro-area">
+            <div class="left-column">
+                <div class="bio">
+                    Christina Li is a designer, developer, and journalist crafting visual and interactive stories. Her documentary roots shape how she chases narratives across mediums — whether through data, graphics, video, photo, or animation.
+                </div>
+                
+                <div class="logo-row">
+                    <div class="logo-item">
+                        <img src="img/bloomberg-logo.png" alt="Bloomberg Logo">
+                    </div>
+                    <div class="logo-item">
+                        <img src="img/vice-logo.png" alt="VICE Logo">
+                    </div>
+                    <div class="logo-item">
+                        <img src="img/time-logo.png" alt="TIME Logo">
+                    </div>
+                    <div class="logo-item">
+                        <img src="img/huffpost-logo.png" alt="HuffPost Logo">
+                    </div>
+                    <div class="logo-item">
+                        <img src="img/as-logo.png" alt="Asia Society Logo">
+                    </div>
+                    <div class="logo-item">
+                        <img src="img/ap-logo.svg" alt="AP Logo">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="clients-section">
+                <div class="clients-title">SELECT WORK</div>
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-slide">
+                            <a href="https://www.youtube.com/watch?v=pLlw9LXZ2IQ&t=6s" target="_blank" rel="noopener noreferrer">
+                            <img src="img/vice-thumb.png" alt="Carousel - VICE">
+                            </a>
+                        </div>
+                        <div class="carousel-slide">
+                            <a href="https://www.youtube.com/watch?v=L42ZY_wmscM" target="_blank" rel="noopener noreferrer">
+                                <img src="img/time-thumb.png" alt="Carousel - TIME">
+                            </a>
+                        </div>
+                        <div class="carousel-slide">
+                            <a href="https://www.youtube.com/watch?v=Knjgaw1WFGw" target="_blank" rel="noopener noreferrer">
+                                <img src="img/huffpost-thumb.png" alt="Carousel - HuffPost">
+                            </a>
+                        </div>
+
+                        <div class="carousel-slide">
+                            <a href="https://www.youtube.com/watch?v=RiOHqtWRw2U&t=9s" target="_blank" rel="noopener noreferrer">
+                                <img src="img/asmag-thumb.png" alt="Carousel - AS Mag">
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-nav">
+                        <button class="carousel-dot active"></button>
+                        <button class="carousel-dot"></button>
+                        <button class="carousel-dot"></button>
+                        <button class="carousel-dot"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Section -->
+        <div id="data" class="section-divider">
+            <div class="section-line"></div>
+            <h2 class="section-title">Data</h2>
+        </div>
+
+        <div class="portfolio-grid-large">
+            <div class="portfolio-item">
+                <a href="https://christinamyli.github.io/4-rivers-trail" target="_blank" rel="noopener noreferrer">
+                <img src="img/cycling.png" alt="Cycling Through South Korea">
+                </a>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">Coast to Coast on Korea's Cycling Trail</div>
+                    <div class="portfolio-category">Interactive Map</div>
+                    <div class="portfolio-description">I documented South Korea's network of dedicated bike paths and cyclist-friendly infrastructure that makes it possible to pedal 650 km across the entire country, spotlighting a nation that has transformed itself into a cyclist's paradise.</div>
+                    <div class="tech-tags">
+                        <span class="tech-tag" data-tech="mapbox">Mapbox</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <a href="https://christinamyli.github.io/women-in-horror-prototype/" target="_blank" rel="noopener noreferrer">
+                    <video 
+                        autoplay 
+                        loop 
+                        muted 
+                        playsinline 
+                        class="portfolio-video"
+                    >
+                        <source src="video/horror.mp4" type="video/mp4">
+                    </video>
+                </a>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">Women in Horror: Fear Through Her Eyes</div>
+                    <div class="portfolio-category">Interactive Data Viz &#8226; Scrollytelling</div>
+                    <div class="portfolio-description">I analyzed the most popular horror films of all time to uncover what their depictions of terrified&#8212;and terrifying&#8212;women tell us about society's deepest fears about gender and power. 
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag" data-tech="svelte">Svelte</span>
+                        <span class="tech-tag" data-tech="d3">D3.js</span>
+                        <span class="tech-tag" data-tech="python">Python</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portfolio-grid-large">
+
+            <div class="portfolio-item">
+                <a href="https://christinamyli.github.io/breakdance/" target="_blank" rel="noopener noreferrer">
+                    <video 
+                        autoplay 
+                        loop 
+                        muted 
+                        playsinline 
+                        class="portfolio-video"
+                    >
+                        <source src="video/breakdance.mov" type="video/mp4">
+                    </video>
+                </a>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">Breaking Goes Global: Korea's Rise to Dance Dominance</div>
+                    <div class="portfolio-category">Animated Data Viz</div>
+                    <div class="portfolio-description">I tracked international breakdance competition wins to understand how South Korea became a b-boy powerhouse, revealing a story about how hip-hop culture has evolved beyond its Bronx roots to find new meaning and energy across the globe.</div>
+                    <div class="tech-tags">
+                        <span class="tech-tag" data-tech="after-effects">After Effects</span>
+                        <span class="tech-tag" data-tech="GSAP">GSAP</span>
+                        <span class="tech-tag" data-tech="illustrator">Illustrator</span>
+                        <span class="tech-tag" data-tech="photoshop">Photoshop</span>
+                </div>
+            </div>
+            </div>
+            
+
+            <div class="portfolio-item">
+                <a href="https://christinamyli.github.io/nyc-evictions/" target="_blank" rel="noopener noreferrer">
+                    <video 
+                        autoplay 
+                        loop 
+                        muted 
+                        playsinline 
+                        class="portfolio-video"
+                    >
+                        <source src="video/evictions.mov" type="video/mp4">
+                    </video>
+                </a>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">Eviction's Permanent Address: Four Bronx Districts Face Ongoing Crisis</div>
+                    <div class="portfolio-category">Data Viz &#8226; Mapping &#8226; Scrollytelling</div>
+                    <div class="portfolio-description">I mapped seven years of NYC eviction data to reveal a stark pattern: four Bronx neighborhoods have consistently remained the city's eviction hotspots, both before and after COVID altered the housing landscape.</div>
+                    <div class="tech-tags">
+                        <span class="tech-tag" data-tech="QGIS">QGIS</span>
+                        <span class="tech-tag" data-tech="illustrator">Illustrator</span>
+                        <span class="tech-tag" data-tech="photoshop">Photoshop</span>
+                        <span class="tech-tag" data-tech="python">Python</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multimedia Section -->
+        <div id="multimedia" class="section-divider">
+            <div class="section-line"></div>
+            <h2 class="section-title">Multimedia</h2>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <a href="https://www.youtube.com/watch?v=pLlw9LXZ2IQ&t=6s" target="_blank" rel="noopener noreferrer">
+                <img src="img/vice.png" alt="Multimedia - VICE TV">
+                </a>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">VICE TV - Understanding What Legacy Means to America</div>
+                    <div class="portfolio-category">Documentary & Trailer Editing</div>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <a href="https://www.youtube.com/watch?v=L42ZY_wmscM" target="_blank" rel="noopener noreferrer">
+                <img src="img/time.png" alt="Multimedia - Time">
+                </a>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">Time Magazine - Nemonte Nenquimo for TIME100</div>
+                    <div class="portfolio-category">Video Editing &#8226; Translation</div>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <a href="https://www.huffpost.com/entry/freedom-fraud-crystal-mason-vs-texas_n_5df944c3e4b00aa0cf26727a" target="_blank" rel="noopener noreferrer">
+                <img src="img/huffpost.png" alt="Multimedia - HuffPost">
+                </a>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">HuffPost - Freedom & Fraud: Crystal Mason vs. Texas</div>
+                    <div class="portfolio-category">Video Editing &#8226; Graphics</div>
+                </div>
+            </div>
+
+            <div class="portfolio-item">
+                <a href="https://www.youtube.com/watch?v=RiOHqtWRw2U&t=10s" target="_blank" rel="noopener noreferrer">
+                <img src="img/asmag.png" alt="Multimedia - AS Mag">
+                </a>
+                <div class="portfolio-info">
+                    <div class="portfolio-title">Asia Society Magazine - Why Do We Celebrate Asian Pacific American Heritage Month?</div>
+                    <div class="portfolio-category">Video Production &#8226; Graphics &#8226; Archival Photo & Footage</div>
+                </div>
+            </div>
+</div>
+
+<div class="portfolio-grid">
+    <div class="portfolio-item">
+        <a href="https://asiasociety.org/magazine/article/kpop-musical-hits-broadway-standing-great-white-way" target="_blank" rel="noopener noreferrer">
+            <img src="img/asmag-kpop.png" alt="Multimedia - AS Mag">
+            </a>
+        <div class="portfolio-info">
+            <div class="portfolio-title">Asia Society Magazine - 'KPOP' Musical Hits Broadway</div>
+            <div class="portfolio-category">Web Design &#8226; Photo Editing &#8226; Video Production</div>
+        </div>
+    </div>
+
+    <div class="portfolio-item">
+        <a href="https://asiasociety.org/magazine/article/letter-cambodia-great-lake" target="_blank" rel="noopener noreferrer">
+            <img src="img/asmag-cambodia.png" alt="Multimedia - AS Mag">
+            </a>
+        <div class="portfolio-info">
+            <div class="portfolio-title">Asia Society Magazine - Letter from Cambodia: The Great Lake</div>
+            <div class="portfolio-category">Web Design &#8226; Photo Editing</div>
+        </div>
+    </div>
+
+    <div class="portfolio-item">
+        <a href="https://asiasociety.org/magazine/article/ongoing-legacies-partition-british-india" target="_blank" rel="noopener noreferrer">
+            <img src="img/asmag-partition.png" alt="Multimedia - AS Mag">
+            </a>
+        <div class="portfolio-info">
+            <div class="portfolio-title">Asia Society Magazine - The Legacies of the Partition of British India</div>
+            <div class="portfolio-category">Web Design &#8226; Photo Editing</div>
+        </div>
+    </div>
+
+    <div class="portfolio-item">
+        <a href="https://asiasociety.org/magazine/article/american-dream-bangladeshis" target="_blank" rel="noopener noreferrer">
+        <img src="img/asmag-bangladesh.png" alt="Multimedia - AS Mag">
+        </a>
+        <div class="portfolio-info">
+            <div class="portfolio-title">Asia Society Magazine - The American Dream of Bangladeshis</div>
+            <div class="portfolio-category">Web Design &#8226; Photo Editing</div>
+        </div>
+    </div>
+ </div>
+
+
+    <div class="portfolio-grid">
+        <div class="portfolio-item">
+            <a>
+            <img src="img/bloomberg-map-russia.png" alt="Multimedia - Blooomberg">
+            </a>
+            <div class="portfolio-info">
+                <div class="portfolio-title">Bloomberg News - Russia Bombards Kyiv & Kharkiv</div>
+                <div class="portfolio-category">Infographic Design</div>
+            </div>
+        </div>
+    
+        <div class="portfolio-item">
+            <a>
+            <img src="img/bloomberg-map-ukraine.png" alt="Multimedia - Bloomberg">
+            </a>
+            <div class="portfolio-info">
+                <div class="portfolio-title">Bloomberg News - Where Ukraine's Refugees Are Going</div>
+                <div class="portfolio-category">Infographic Design</div>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <a href="https://vimeo.com/930093165" target="_blank" rel="noopener noreferrer">
+            <img src="img/ice-sculptor.png" alt="Multimedia - Animation">
+            </a>
+            <div class="portfolio-info">
+                <div class="portfolio-title">School of Motion - Be the Ice Sculptor</div>
+                <div class="portfolio-category">Animation</div>
+            </div>
+        </div>
+    </div>
+    <p><i>For more multimedia samples, please <a href="mailto:christinamyli@gmail.com" style="text-decoration: none; color: black;">email</a>.</i></p>
+
+        <div id="bio" class="section-divider">
+            <div class="section-line"></div>
+            <h2 class="section-title">Bio</h2>
+        </div>
+        
+        <div class="bio-content">
+            <div class="bio-section">
+                Currently: Columbia Journalism School's <a href="https://ledeprogram.com/" class="bio-link">Lede Program for Data Journalism</a> graduate, elections web scraper at <a href="https://ap.org/elections/our-role/counting-the-vote/" class="bio-link">Associated Press</a>.
+            </div>
+        
+            <div class="bio-section">
+                Previously: producer at <a href="https://asiasociety.org/magazine" class="bio-link">Asia Society Magazine</a> commissioning and creating multimedia stories for web and social, producer/editor at <a href="https://bloomberg.com/btv/series/daybreak-asia" class="bio-link">Bloomberg News</a> creating video and graphics for broadcast.
+            </div>
+        
+            <div class="bio-section interests">
+                Always: <a href="https://strava.com/athletes/123101719" class="bio-link">cycling enthusiast</a> and public transport advocate, 
+                <a href="https://www.lomography.com/homes/littlelens" class="bio-link">film photography lover</a>, 
+                dance admirer, 
+                horror <a href="https://goodreads.com/user/show/9892121-christina-li" class="bio-link">novel</a> and <a href="https://letterboxd.com/christinali/" class="bio-link">movie</a> consumer, 
+                amateur translator of Chinese and Korean poetry/essays/short stories.
+            </div>
+        </div>
+
+        <footer>
+            <div class="social-links">
+                <a href="mailto:christinamyli@gmail.com">Email</a>
+                <a href="img/Christina Li - Visual Journalist and Designer Resume - 2024.pdf">Resume</a>
+                <a href="https://linkedin.com/in/christinamyli">LinkedIn</a>
+                <a href="https://github.com/christinamyli">GitHub</a>
+                <!-- <a href="#">Instagram</a> -->
+                <!-- <a href="https://vimeo.com/christinamyli">Vimeo</a> -->
+            </div>
+            <div class="credit">&#9400; 2024 Christina Li</div>
+        </footer>
+
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('.carousel');
+            const inner = carousel.querySelector('.carousel-inner');
+            const dots = carousel.querySelectorAll('.carousel-dot');
+            let currentSlide = 0;
+        
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = index;
+                    updateCarousel();
+                });
+            });
+        
+            function updateCarousel() {
+                inner.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+        
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % dots.length;
+                updateCarousel();
+            }, 5000);
+        });
+    </script>
+    
+<button id="backToTop" class="back-to-top">↑</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth'
+                });
+                backToTop.classList.add('visible');
+            }
+        });
+    });
+
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+</body>
+</html>
